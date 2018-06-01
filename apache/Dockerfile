@@ -1,7 +1,5 @@
 # Serveur apache
-FROM debian:latest
-
-USER www-data
+FROM debian:stretch-slim
 
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 
