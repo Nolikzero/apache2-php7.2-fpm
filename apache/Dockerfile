@@ -7,8 +7,8 @@ RUN apt-get update
 RUN apt-get -y install apache2 libapache2-mod-fastcgi
 
 COPY ./sites-available/* /etc/apache2/sites-available/
-RUN rm /etc/apache2/sites-enabled/*
-RUN ln -s /etc/apache2/sites-available/ /etc/apache2/sites-enabled/
+RUN cd /etc/apache2/sites-enabled/ && rm 000-default.conf
+RUN ln -s /etc/apache2/sites-available/* /etc/apache2/sites-enabled/
 
 # Change uid and gid of apache to docker user uid/gid
 
