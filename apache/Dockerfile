@@ -1,6 +1,10 @@
 # Serveur apache
 FROM debian:latest
 
+USER www-data
+
+RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
+
 RUN echo 'deb http://ftp.fr.debian.org/debian/ jessie non-free' >> /etc/apt/sources.list
 RUN echo 'deb-src http://ftp.fr.debian.org/debian/ jessie non-free' >> /etc/apt/sources.list
 RUN apt-get update
@@ -12,6 +16,8 @@ RUN ln -s /etc/apache2/sites-available/* /etc/apache2/sites-enabled/
 
 ENV APACHE_CONFDIR /etc/apache2
 ENV APACHE_ENVVARS $APACHE_CONFDIR/envvars
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
 
 RUN set -ex \
 	\
@@ -35,6 +41,8 @@ RUN set -ex \
 		&& mkdir -p "$dir" \
 		&& chown -R "$APACHE_RUN_USER:$APACHE_RUN_GROUP" "$dir"; \
 	done
+
+RUN a2dismod mpm_event && a2enmod mpm_prefork
 # Change uid and gid of apache to docker user uid/gid
 
 RUN chown -R $APACHE_RUN_USER:$APACHE_RUN_GROUP /var/lib/apache2/fastcgi
@@ -47,8 +55,6 @@ RUN chmod +x /usr/bin/apache.sh
 ENTRYPOINT apache.sh
 
 VOLUME /var/www
-
-RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 
 RUN chown -R www-data:www-data /var/www
 RUN chown -R www-data:www-data /var/lib/apache2/fastcgi
