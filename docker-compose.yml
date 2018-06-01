@@ -13,9 +13,9 @@
                 "./init:/docker-entrypoint-initdb.d"
             ],
             environment: {
-                "POSTGRES_USER": "do",
-                "POSTGRES_PASSWORD": "do",
-                "POSTGRES_DB": "do"
+                POSTGRES_USER: "douser",
+                POSTGRES_PASSWORD: "douser",
+                POSTGRES_DB: "douser"
             },
             "ports": [
                 "5432:5432"
