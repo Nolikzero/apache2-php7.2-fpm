@@ -50,4 +50,7 @@ VOLUME /var/www
 
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 
+RUN chown -R www-data:www-data /var/lib/apache2/fastcgi
+RUN chmod -R 775 /var/lib/apache2/fastcgi
+
 WORKDIR /var/www
