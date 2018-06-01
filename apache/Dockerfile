@@ -30,6 +30,7 @@ RUN set -ex \
 		"$APACHE_RUN_DIR" \
 		"$APACHE_LOG_DIR" \
 		/var/www/html \
+	    /var/lib/apache2/fastcgi \
 	; do \
 		rm -rvf "$dir" \
 		&& mkdir -p "$dir" \
