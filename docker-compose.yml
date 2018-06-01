@@ -9,7 +9,7 @@
             "image": "postgres",
             "volumes": [
                 "postgres_data:/var/lib/postgresql/data/",
-                "./init_postgres:/docker-entrypoint-initdb.d"
+                "./init:/docker-entrypoint-initdb.d"
             ],
             environment: {
                 "POSTGRES_USER": "do",
