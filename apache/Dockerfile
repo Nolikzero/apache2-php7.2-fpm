@@ -30,13 +30,15 @@ RUN set -ex \
 		"$APACHE_RUN_DIR" \
 		"$APACHE_LOG_DIR" \
 		/var/www/html \
-	    /var/lib/apache2/fastcgi \
 	; do \
 		rm -rvf "$dir" \
 		&& mkdir -p "$dir" \
 		&& chown -R "$APACHE_RUN_USER:$APACHE_RUN_GROUP" "$dir"; \
 	done
 # Change uid and gid of apache to docker user uid/gid
+
+RUN chown -R $APACHE_RUN_USER:$APACHE_RUN_GROUP /var/lib/apache2/fastcgi
+RUN chmod -R 775 /var/lib/apache2/fastcgi
 
 EXPOSE 80
 
